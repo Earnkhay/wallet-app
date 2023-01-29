@@ -1,6 +1,6 @@
 <template>
-    <div :class="[alertType == 'Success' ? 'bg-success' : 'bg-danger']" class="alertComp">
-        <p class="mt-1 mb-1"><span class="pe-2"><i class="fa-solid" :class="[alertType == 'Success' ? 'fa-circle-check' : 'fa-circle-exclamation']"></i></span>{{alertText}}</p>
+    <div :class="[alertType == 'Success' ? 'alert-success' : 'alert-danger']" class="alert" role="alert">
+        <span class="me-2"><i class="fa-solid" :class="[alertType == 'Success' ? 'fa-circle-check' : 'fa-circle-exclamation']"></i></span>{{alertText}}
     </div>
 </template>
 
@@ -18,11 +18,3 @@ export default class alert extends Vue {
     alertText: string | undefined;
 }
 </script>
-
-<style scoped>
-.alertComp{
-    padding: 5px;
-    border-radius: 10px;
-    color: white;
-}
-</style>

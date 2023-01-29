@@ -22,7 +22,7 @@
                     <div class="mb-4">
                         <label for="inputPassword" class=" form-label">Password</label>
                         <div class="d-flex">
-                        <input :type="passwordType" class="form-control password" id="inputPassword" placeholder="Input Password" v-model="password" @blur="checkpageTypePassword">
+                        <input :type="passwordType" class="form-control password" id="inputPassword" placeholder="Input Password" v-model="password" @input="checkpageTypePassword">
                         <i class="fa-solid icon" :class="{'fa-eye': showEye, 'fa-eye-slash': !showEye}" id="togglePassword" @click="toggleVisibility"></i>
                         </div>
                     </div>
@@ -134,10 +134,6 @@ export default class login extends Vue {
             this.alertTitle = "Password should be at least 6 characters long, contain at least one uppercase & one digit"
             this.alertType = "Danger"
             this.alertShow = true
-            setTimeout(
-                () => {
-                    this.password = ""
-            },3000)
         }
     }
     checkpageTypePassword() {
@@ -149,9 +145,9 @@ export default class login extends Vue {
     }
 
     async checkpageTypeAuth(pageType: string){
-        if (pageType == 'signUp' && this.name != "" && this.email != "" && this.password != '') {
+        if (pageType == 'signUp' && this.name != "" && this.email != "" && this.password != '' && this.regPassword.test(this.password)) {
             this.spinnerShow = true
-            axios.post(this.API_URL, {
+            await axios.post(this.API_URL, {
                 name: this.name,
                 email: this.email,
                 password: this.password,
@@ -179,7 +175,7 @@ export default class login extends Vue {
             });
         }else if(pageType == 'login' && this.email != "" && this.password != ''){
             this.spinnerShow = true
-            axios.post(`${this.API_URL}/login`, {
+            await axios.post(`${this.API_URL}/login`, {
                 email: this.email,
                 password: this.password,
             })
@@ -213,7 +209,7 @@ export default class login extends Vue {
                 },3000) 
             });
         }else{
-            this.alertTitle = "Error !, Please input all details"
+            this.alertTitle = "Error !, Please input required details"
             this.alertType = "Danger"
             this.alertShow = true
             this.spinnerShow = true
